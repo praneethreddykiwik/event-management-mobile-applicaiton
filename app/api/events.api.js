@@ -4,7 +4,14 @@ export const fetchEventsApi = (query = "") => {
   return httpsClient.get("/events" + query);
 };
 
-// Compare here/
+export const createEventApi = (payload) => {
+  return httpsClient.post("/events", payload);
+};
+
+export const updateEventApi = (payload) => {
+  return httpsClient.patch(`/events/${payload.eventUid}`, payload);
+};
+
 export const assignEventApi = (payload) => {
   return httpsClient.patch(`/events/${payload.eventUid}/assign`, payload);
 };

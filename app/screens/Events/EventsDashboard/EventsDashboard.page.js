@@ -3,6 +3,7 @@ import { ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
+import { ScreenWrapper } from "../../../HOC/ScreenWrapper";
 
 import { eventsSelector } from "../../../redux/events/events.slice";
 import { userSelecter } from "../../../redux/users/users.slice";
@@ -40,7 +41,7 @@ const EventsDashboard = () => {
   console.log("events render here: ", events);
 
   return (
-    <SafeArea>
+    <ScreenWrapper>
       <Scroll showsVerticalScrollIndicator={false}>
         <PageTitle>Events</PageTitle>
 
@@ -76,15 +77,9 @@ const EventsDashboard = () => {
           )}
         </TaskMainCard>
       </Scroll>
-    </SafeArea>
+    </ScreenWrapper>
   );
 };
-
-// Create the BlueBlack HOC for this component // Compare here.
-const SafeArea = styled.SafeAreaView`
-  flex: 1;
-  background-color: ${({ theme }) => theme.colors["light-blue"]};
-`;
 
 const Scroll = styled.ScrollView`
   flex: 1;

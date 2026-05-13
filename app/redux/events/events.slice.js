@@ -10,13 +10,14 @@ const initialState = {
   selectedEventFilters: INITIAL_FILTERS,
   assignEventLoading: false,
   deleteEventLoading: false,
+  createEventLoading: false,
+  updateEventLoading: false,
 };
 
 const eventSlice = createSlice({
   name: "events",
   initialState,
   reducers: {},
-  // Compare here/.
   extraReducers: (builder) => {
     builder
       .addCase(actions.fetchEventsAction.pending, (state) => {
@@ -31,6 +32,28 @@ const eventSlice = createSlice({
       .addCase(actions.fetchEventsAction.rejected, (state, action) => {
         state.eventsLoading = false;
         state.eventsError = action.payload;
+      });
+
+    builder
+      .addCase(actions.createEventAction.pending, (state) => {
+        state.createEventLoading = true;
+      })
+      .addCase(actions.createEventAction.fulfilled, (state) => {
+        state.createEventLoading = false;
+      })
+      .addCase(actions.createEventAction.rejected, (state) => {
+        state.createEventLoading = false;
+      });
+
+    builder
+      .addCase(actions.updateEventAction.pending, (state) => {
+        state.updateEventLoading = true;
+      })
+      .addCase(actions.updateEventAction.fulfilled, (state) => {
+        state.updateEventLoading = false;
+      })
+      .addCase(actions.updateEventAction.rejected, (state) => {
+        state.updateEventLoading = false;
       })
       .addCase(actions.eventsFilterAction.pending, (state, action) => {
         state.eventsLoading = true;

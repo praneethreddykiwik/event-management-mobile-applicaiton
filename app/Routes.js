@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // SCREENS
 import EventsDashboard from "./screens/Events/EventsDashboard/EventsDashboard.page";
-import CreateEvent from "./screens/Events/CreateEvent/CreateEvent.page";
+import CreateEditEvent from "./screens/Events/CreateEvent/CreateEditEvent.page";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CustomTabBar from "./components/CustomTabBar/CustomTabBar.component";
 
@@ -17,7 +17,7 @@ const AppRoutes = () => {
       tabBar={(props) => <CustomTabBar {...props} screenOptions />}
     >
       <Tab.Screen name="EventsDashboard" component={EventsDashboard} />
-      <Tab.Screen name="CreateEvent" component={CreateEvent} />
+      <Tab.Screen name="CreateEvent" component={CreateEditEvent} />
     </Tab.Navigator>
   );
 };

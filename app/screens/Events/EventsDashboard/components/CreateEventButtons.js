@@ -18,7 +18,7 @@ const CreateEventButtons = ({ onCreateEvent, onManageManagers }) => (
 );
 
 const Row = styled.View`
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
   padding: 16px 0;
 `;
