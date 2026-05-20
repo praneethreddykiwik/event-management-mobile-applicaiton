@@ -1,0 +1,5 @@
+export const turncateStyles = `
+    overflow: hidden;
+    white-space: no-wrap;
+    text-overflow: ellipsis;
+`;

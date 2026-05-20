@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import styled from "styled-components/native";
 
 import { ScreenWrapper } from "../../../HOC/ScreenWrapper";
@@ -19,6 +19,8 @@ import { eventsMetadata } from "../../../constants/events.constants";
 import { VenueSuggestion } from "../../../components/Venue/VenueSuggestion";
 import Toast from "react-native-toast-message";
 import CreateEventForm from "./CreateEventForm";
+import PageHeader from "../../../components/Headers/PageHeader/PageHeader";
+import ScrollView from "../../../layouts/scrollview/ScrollView.layout";
 
 const CreateEditEvent = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -67,18 +69,14 @@ const CreateEditEvent = ({ navigation, route }) => {
 
   return (
     <ScreenWrapper>
+      <PageHeader title>
+        {isEditMode ? "Edit Event" : "Create Event"}
+      </PageHeader>
+
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Page Header */}
-        <PageHeader>
-          <HeaderTitle>
-            {isEditMode ? "Edit Event" : "Create Event"}
-          </HeaderTitle>
-          <Divider />
-        </PageHeader>
-
         {/* Form */}
         <FormContainer>
           <CreateEventForm
@@ -109,17 +107,10 @@ const CreateEditEvent = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
+    // paddingTop: 20,
     paddingBottom: 40,
   },
 });
-
-const PageHeader = styled.View`
-  background-color: #fff;
-  padding: 0 20px;
-  height: 76px;
-  justify-content: center;
-  margin-bottom: 20px;
-`;
 
 const HeaderTitle = styled.Text`
   font-size: 26px;
@@ -127,21 +118,9 @@ const HeaderTitle = styled.Text`
   color: #000;
 `;
 
-const Divider = styled.View`
-  height: 1px;
-  background-color: #eee;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-`;
-
-const FormContainer = styled.View`
-  padding: 0 20px 20px 20px;
-`;
+const FormContainer = styled.View``;
 
 const SuggestionsSection = styled.View`
-  padding: 0 20px;
   margin-top: 20px;
 `;
 

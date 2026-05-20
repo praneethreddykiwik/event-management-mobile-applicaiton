@@ -36,7 +36,7 @@ const CustomTabBar = ({ state }) => {
     Animated.spring(translateX, {
       toValue: layout.x,
       useNativeDriver: true,
-      tension: 70,
+      tension: 100,
       friction: 9,
     }).start();
   };
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 6,
     bottom: 6,
-    left: 0,
+    left: -1,
     borderRadius: 50,
     backgroundColor: "#26C867",
   },

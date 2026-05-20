@@ -7,5 +7,5 @@ export const ScreenWrapper = ({ children }) => {
 
 const Safe = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors["light-blue"]};
+  /* background-color: ${({ theme }) => theme.colors["light-blue"]}; */
 `;

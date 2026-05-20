@@ -17,6 +17,9 @@ import EventSummaryCards from "./components/EventSummaryCards";
 import CreateEventButtons from "./components/CreateEventButtons";
 import EventsFilterCards from "./components/EventsFilterCards";
 import EventItem from "./components/EventItem";
+import { MONITOR_EV } from "../../../Enums";
+import PageHeader from "../../../components/Headers/PageHeader/PageHeader";
+import ScrollView from "../../../layouts/scrollview/ScrollView.layout";
 
 // Compare here/. need full comparision and re-write.
 const EventsDashboard = () => {
@@ -42,9 +45,8 @@ const EventsDashboard = () => {
 
   return (
     <ScreenWrapper>
-      <Scroll showsVerticalScrollIndicator={false}>
-        <PageTitle>Events</PageTitle>
-
+      <PageHeader title>Events</PageHeader>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <EventSummaryCards events={events} eventManagers={eventManagers} />
 
         <CreateEventButtons
@@ -59,7 +61,7 @@ const EventsDashboard = () => {
         <TaskMainCard>
           <TaskHeader>
             <SectionTitle>Events</SectionTitle>
-            <SectionSubtitle>Manage and monitor all events</SectionSubtitle>
+            <SectionSubtitle>{MONITOR_EV}</SectionSubtitle>
           </TaskHeader>
 
           {events.length === 0 ? (
@@ -76,15 +78,10 @@ const EventsDashboard = () => {
             ))
           )}
         </TaskMainCard>
-      </Scroll>
+      </ScrollView>
     </ScreenWrapper>
   );
 };
-
-const Scroll = styled.ScrollView`
-  flex: 1;
-  padding: 0 20px;
-`;
 
 const PageTitle = styled.Text`
   font-size: ${({ theme }) => theme.typography["heading-h2"].fontSize}px;
@@ -107,7 +104,7 @@ const SectionSubtitle = styled.Text`
 `;
 
 const TaskMainCard = styled.View.attrs(({ theme }) => ({
-  style: theme?.shadows?.["level-2"] || {},
+  style: theme?.shadows?.["level-3"] || {},
 }))`
   border-radius: 14px;
   background-color: ${({ theme }) => theme.colors.white};
