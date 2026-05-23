@@ -37,7 +37,7 @@ const Value = styled.Text`
 `;
 
 const Label = styled.Text`
-  font-size: ${({ theme }) => theme.typography["body-small"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["body-small"]["font-size"]}px;
   color: ${({ theme }) => theme.colors["text-gray-color"]};
   margin-top: 4px;
   text-align: center;

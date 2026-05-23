@@ -30,20 +30,15 @@ export const StyledHeadingBig = styled.Text`
 
 export const StyledHeading = styled.Text`
   color: #000;
-  font-size: 32px;
-  font-weight: 600;
-  line-height: 35.2px;
-  margin: 20px 0;
-  /* // text-align: ${textAlign}; */
+  ${({ theme }) =>
+    theme.typography["display-h1"]}; /* // text-align: ${textAlign}; */
 `;
 export const StyledSemiHeading = styled.Text`
-  color: #000;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 28px;
-  margin: 12px 0;
-  // text-align: ${textAlign};
+  color: ${({ theme }) => theme.colors.black};
+  ${({ theme }) => theme.typography["display-h2"]}// text-align: ${textAlign};
 `;
+
+// check here update like above.
 export const StyledMediumHeading = styled.Text`
   color: #000;
   font-size: 20px;

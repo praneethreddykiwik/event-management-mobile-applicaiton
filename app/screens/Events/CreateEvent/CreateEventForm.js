@@ -12,6 +12,7 @@ import { modifyTimeToISO } from "../../../utils/utils";
 import { generateNewEventsInputs } from "../../../redux/forms/metadata/event.metadata";
 import { userSelecter } from "../../../redux/users/users.slice";
 import { validationList } from "../../../constants/validations.constants";
+import logger from "../../../utils/logger.utils";
 
 const CONTINUE = "Continue";
 
@@ -38,6 +39,7 @@ const CreateEventForm = ({ onCreateEvent, navigation }) => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
+    logger.info("This is a Debug log 2", { name, value });
     dispatch(updateEventInputs({ name, value }));
   };
 

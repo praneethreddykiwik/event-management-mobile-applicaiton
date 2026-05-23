@@ -21,6 +21,7 @@ import Toast from "react-native-toast-message";
 import CreateEventForm from "./CreateEventForm";
 import PageHeader from "../../../components/Headers/PageHeader/PageHeader";
 import ScrollView from "../../../layouts/scrollview/ScrollView.layout";
+import logger from "../../../utils/logger.utils";
 
 const CreateEditEvent = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const CreateEditEvent = ({ navigation, route }) => {
     if (!eventManagers.length) {
       const callback = (eventManagersRes) => {
         const inputs = generateNewEventsInputs(eventManagersRes);
+
         dispatch(updateAllEventInputs(inputs));
       };
       dispatch(fetchManagersAction({ callback }));

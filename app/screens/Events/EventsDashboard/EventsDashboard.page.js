@@ -20,6 +20,7 @@ import EventItem from "./components/EventItem";
 import { MONITOR_EV } from "../../../Enums";
 import PageHeader from "../../../components/Headers/PageHeader/PageHeader";
 import ScrollView from "../../../layouts/scrollview/ScrollView.layout";
+import logger from "../../../utils/logger.utils";
 
 // Compare here/. need full comparision and re-write.
 const EventsDashboard = () => {
@@ -34,6 +35,7 @@ const EventsDashboard = () => {
     const query = `?status=${INITIAL_FILTERS.filter((fl) => fl.selected)
       .map((m) => m.value)
       .join(",")}`;
+    logger.info("requry of fetch managers", query);
     dispatch(fetchEventsAction({ query }));
   }, []);
 
@@ -41,7 +43,7 @@ const EventsDashboard = () => {
     navigation.navigate("CreateEvent");
   };
 
-  console.log("events render here: ", events);
+  logger.info("events render here: ", events);
 
   return (
     <ScreenWrapper>
@@ -84,20 +86,20 @@ const EventsDashboard = () => {
 };
 
 const PageTitle = styled.Text`
-  font-size: ${({ theme }) => theme.typography["heading-h2"].fontSize}px;
-  font-weight: ${({ theme }) => theme.typography["heading-h2"].fontWeight};
+  font-size: ${({ theme }) => theme.typography["heading-h2"]["font-size"]}px;
+  font-weight: ${({ theme }) => theme.typography["heading-h2"]["font-weight"]};
   color: ${({ theme }) => theme.colors.black};
   padding: 20px 0 16px;
 `;
 
 const SectionTitle = styled.Text`
-  font-size: ${({ theme }) => theme.typography["heading-h3"].fontSize}px;
-  font-weight: ${({ theme }) => theme.typography["heading-h3"].fontWeight};
+  font-size: ${({ theme }) => theme.typography["heading-h3"]["font-size"]}px;
+  font-weight: ${({ theme }) => theme.typography["heading-h3"]["font-weight"]};
   color: ${({ theme }) => theme.colors.black};
 `;
 
 const SectionSubtitle = styled.Text`
-  font-size: ${({ theme }) => theme.typography["body-small"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["body-small"]["font-size"]}px;
   color: ${({ theme }) => theme.colors["text-gray-color"]};
   margin-top: 2px;
   margin-bottom: 12px;
@@ -122,7 +124,7 @@ const Loader = styled(ActivityIndicator)`
 const EmptyText = styled.Text`
   text-align: center;
   color: ${({ theme }) => theme.colors["text-gray-color"]};
-  font-size: ${({ theme }) => theme.typography["body-small"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["body-small"]["font-size"]}px;
   padding: 30px 20px;
 `;
 

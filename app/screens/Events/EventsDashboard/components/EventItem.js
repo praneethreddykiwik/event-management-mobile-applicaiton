@@ -113,14 +113,14 @@ const Info = styled.View`
 `;
 
 const EventName = styled.Text`
-  font-size: ${({ theme }) => theme.typography["heading-h3"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["heading-h3"]["font-size"]}px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.black};
   margin-bottom: 6px;
 `;
 
 const Meta = styled.Text`
-  font-size: ${({ theme }) => theme.typography["body-small"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["body-small"]["font-size"]}px;
   color: ${({ theme }) => theme.colors["text-gray-color"]};
   margin-top: 2px;
 `;
@@ -142,7 +142,7 @@ const StatusBadge = styled.View`
 `;
 
 const StatusBadgeText = styled.Text`
-  font-size: ${({ theme }) => theme.typography.caption.fontSize}px;
+  font-size: ${({ theme }) => theme.typography.caption["font-size"]}px;
   font-weight: 700;
   color: ${({ theme, type }) =>
     theme.badgeColors[`badge-${type}-primary`] || theme.colors.black};
@@ -161,7 +161,7 @@ const Actions = styled.View`
 const AssignedLabel = styled.Text`
   color: ${({ theme }) => theme.colors.primary};
   font-weight: 600;
-  font-size: ${({ theme }) => theme.typography["body-small"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["body-small"]["font-size"]}px;
 `;
 
 const AssignBtn = styled.TouchableOpacity`
@@ -172,7 +172,7 @@ const AssignBtn = styled.TouchableOpacity`
 
 const AssignBtnText = styled.Text`
   color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme }) => theme.typography["body-small"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["body-small"]["font-size"]}px;
   font-weight: 600;
 `;
 
@@ -191,7 +191,7 @@ const DeleteBtn = styled.TouchableOpacity`
 
 const DeleteBtnText = styled.Text`
   color: ${({ theme }) => theme.colors.warning};
-  font-size: ${({ theme }) => theme.typography["body-small"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["body-small"]["font-size"]}px;
   font-weight: 600;
 `;
 
@@ -203,7 +203,7 @@ const ViewBtn = styled.TouchableOpacity`
 
 const ViewBtnText = styled.Text`
   color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.typography["body-small"].fontSize}px;
+  font-size: ${({ theme }) => theme.typography["body-small"]["font-size"]}px;
   font-weight: 600;
 `;
 

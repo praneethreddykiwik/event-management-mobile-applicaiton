@@ -177,5 +177,5 @@ export const INITIAL_FILTERS = [
   { value: "completed", selected: true },
   { value: "declined", selected: true },
   { value: "cancelled", selected: true },
-  { value: "deleted", selected: false },
+  // { value: "deleted", selected: true }, // this is for my testing
 ];

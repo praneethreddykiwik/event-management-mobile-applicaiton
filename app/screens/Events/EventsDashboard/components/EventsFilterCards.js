@@ -87,14 +87,14 @@ const FilterChip = styled.TouchableOpacity`
 `;
 
 const ChipLabel = styled.Text`
-  font-size: ${({ theme }) => theme.typography.caption.fontSize}px;
+  font-size: ${({ theme }) => theme.typography.caption["font-size"]}px;
   font-weight: 600;
   text-transform: capitalize;
   color: ${({ selected, color }) => (selected ? "#fff" : color)};
 `;
 
 const ChipCount = styled.Text`
-  font-size: ${({ theme }) => theme.typography.caption.fontSize}px;
+  font-size: ${({ theme }) => theme.typography.caption["font-size"]}px;
   font-weight: 700;
   color: ${({ selected, color }) => (selected ? "#fff" : color)};
 `;
