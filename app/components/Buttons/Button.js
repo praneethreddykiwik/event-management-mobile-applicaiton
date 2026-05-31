@@ -1,15 +1,15 @@
 import { Icon } from "../Icons/Icons";
 import {
+  ButtonContent,
+  ButtonImage,
+  ButtonText,
   StyledBaseButton,
+  StyledDeleteBtn,
   StyledIconButton,
+  StyledNoBorderButton,
   StyledOutlinedButton,
   StyledSecButton,
   StyledTransparentButton,
-  ButtonContent,
-  ButtonImage,
-  StyledNoBorderButton,
-  StyledDeleteBtn,
-  ButtonText,
 } from "../Styled/Buttons.styled";
 
 export const Button = ({

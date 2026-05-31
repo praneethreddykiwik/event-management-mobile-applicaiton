@@ -1,18 +1,20 @@
+import { StyleSheet, View } from "react-native";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
-import { View, StyleSheet } from "react-native";
+
+import { Button } from "../../../components/Buttons/Button";
+import { Inputs } from "../../../components/Inputs/Inputs";
+import { validationList } from "../../../constants/validations.constants";
+import { authSelector } from "../../../redux/auth/auth.slice";
 import {
   formsSelector,
-  updateEventInputs,
   updateAllEventInputs,
+  updateEventInputs,
 } from "../../../redux/forms/forms.slice";
-import { Inputs } from "../../../components/Inputs/Inputs";
-import { Button } from "../../../components/Buttons/Button";
-import { authSelector } from "../../../redux/auth/auth.slice";
-import { modifyTimeToISO } from "../../../utils/utils";
 import { generateNewEventsInputs } from "../../../redux/forms/metadata/event.metadata";
-import { userSelecter } from "../../../redux/users/users.slice";
-import { validationList } from "../../../constants/validations.constants";
+import { usersSelector } from "../../../redux/users/users.slice";
 import logger from "../../../utils/logger.utils";
+import { modifyTimeToISO } from "../../../utils/utils";
 
 const CONTINUE = "Continue";
 
@@ -20,8 +22,10 @@ const CreateEventForm = ({ onCreateEvent, navigation }) => {
   const dispatch = useDispatch();
 
   const { createEventInputs } = useSelector(formsSelector);
-  const { tenantId } = useSelector(authSelector);
-  const { eventManagers } = useSelector(userSelecter);
+  const { authUser } = useSelector(authSelector);
+  const { eventManagers } = useSelector(usersSelector);
+
+  const tenantUid = authUser?.tenantUid;
 
   const validateFields = () => {
     let isValid = true;
@@ -45,7 +49,9 @@ const CreateEventForm = ({ onCreateEvent, navigation }) => {
 
   const onSubmit = async () => {
     const isValid = validateFields();
-    if (!isValid) return;
+    if (!isValid) {
+      return;
+    }
 
     const reqPayload = createEventInputs.reduce((acu, cur) => {
       return { ...acu, [cur.name]: cur.value };
@@ -55,10 +61,9 @@ const CreateEventForm = ({ onCreateEvent, navigation }) => {
       reqPayload.eventDate,
       reqPayload.eventTime,
     );
-    reqPayload.tenantUid = tenantId;
+    reqPayload.tenantUid = tenantUid;
     reqPayload.scheduledAt = scheduledAt;
     reqPayload.status = "pending";
-
     await onCreateEvent({ navigation, reqPayload });
   };
 
@@ -72,7 +77,7 @@ const CreateEventForm = ({ onCreateEvent, navigation }) => {
   };
 
   return (
-    <View>
+    <Animated.View layout={LinearTransition.duration(250)}>
       {createEventInputs.map((inp) => (
         <Inputs key={inp.name} {...inp} onChange={onChange} />
       ))}
@@ -93,7 +98,7 @@ const CreateEventForm = ({ onCreateEvent, navigation }) => {
           Go Back
         </Button>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

@@ -10,13 +10,18 @@ export const extractHoursAndMinutes = (time) => {
   return { hour, minute };
 };
 
-export const formatScheduleDate = (date, hour, minute) => {
-  let scheduledAt = new Date(
-    `${date}T${hour.toString().padStart(2, "0")}:${minute
-      .toString()
-      .padStart(2, "0")}:00`,
-  );
-  return scheduledAt.toISOString();
+export const formatScheduleDate = (dateISO, hour, minute) => {
+  const date = new Date(dateISO);
+
+  date.setUTCHours(hour);
+
+  date.setUTCMinutes(minute);
+
+  date.setUTCSeconds(0);
+
+  date.setUTCMilliseconds(0);
+
+  return date.toISOString();
 };
 
 export const dateObj = (iso) => {
@@ -51,10 +56,14 @@ export const isoToInputDateTime = (iso) => {
   return { date: `${yyyy}-${mm}-${dd}`, time: `${hh}:${min}` };
 };
 
-export const modifyTimeToISO = (date, time) => {
-  const { hour, minute } = extractHoursAndMinutes(time);
-  const formatedTime = formatScheduleDate(date, hour, minute);
-  return formatedTime;
+export const modifyTimeToISO = (dateISO, timeISO) => {
+  const timeDate = new Date(timeISO);
+
+  const hour = timeDate.getUTCHours();
+
+  const minute = timeDate.getUTCMinutes();
+
+  return formatScheduleDate(dateISO, hour, minute);
 };
 
 export const snakeToCamel = (str) =>

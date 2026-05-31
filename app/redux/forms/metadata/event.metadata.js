@@ -1,6 +1,6 @@
 import {
-  EVENT_TYPE_OPTIONS,
   EVENT_STATUSES,
+  EVENT_TYPE_OPTIONS,
 } from "../../../constants/events.constants";
 import { validationList } from "../../../constants/validations.constants";
 import { isoToInputDateTime } from "../../../utils/utils";
@@ -34,7 +34,7 @@ export const BASE_EVENT_METADATA = [
   {
     type: "date",
     name: "eventDate",
-    value: "",
+    value: new Date().toISOString(),
     placeholder: "YYYY-MM-DD",
     label: "Event Date",
     validations: [validationList.REQUIRED],
@@ -42,7 +42,7 @@ export const BASE_EVENT_METADATA = [
   {
     type: "time",
     name: "eventTime",
-    value: "",
+    value: new Date().toISOString(),
     placeholder: "HH:MM",
     label: "Event Time",
     validations: [validationList.REQUIRED],

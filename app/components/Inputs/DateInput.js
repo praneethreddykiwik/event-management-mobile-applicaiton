@@ -1,6 +1,10 @@
-import { useState } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
 import { validationList } from "../../constants/validations.constants";
+import logger from "../../utils/logger.utils";
+import DTPicker from "../DateTimePicker/DTPicker.component";
+import { StyledParagraphSmall } from "../Styled/Typography.styled";
+import { isoToInputDateTime } from "../../utils/utils";
 
 export const DateInput = ({
   label,
@@ -12,12 +16,11 @@ export const DateInput = ({
   validations,
   disabled,
 }) => {
-  const [focused, setFocused] = useState(false);
+  // const [focused, setFocused] = useState(false);
   const isRequired = validations?.includes(validationList.REQUIRED);
 
-  const handleChange = (text) => {
-    onChange({ target: { name, value: text } });
-  };
+  // const [date, setDate] = useState(new Date());
+  const { date: formattedDate } = isoToInputDateTime(value);
 
   return (
     <View style={styles.container}>
@@ -27,22 +30,11 @@ export const DateInput = ({
           {isRequired ? " *" : ""}
         </Text>
       ) : null}
-      <TextInput
-        style={[
-          styles.input,
-          focused && styles.inputFocused,
-          error && styles.inputError,
-        ]}
-        value={value}
-        placeholder={placeholder || "YYYY-MM-DD"}
-        onChangeText={handleChange}
-        placeholderTextColor="#bdbdbd"
-        keyboardType="numeric"
-        maxLength={10}
-        editable={!disabled}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-      />
+
+      <DTPicker mode="date" value={value} onChange={onChange} name={name}>
+        <StyledParagraphSmall>{formattedDate}</StyledParagraphSmall>
+      </DTPicker>
+
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
@@ -50,7 +42,7 @@ export const DateInput = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    marginBottom: 20,
     width: "100%",
   },
   label: {
@@ -60,23 +52,23 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     textAlign: "left",
   },
-  input: {
-    width: "100%",
-    borderRadius: 30,
-    height: 40,
-    paddingHorizontal: 20,
-    fontSize: 14,
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
-    color: "#000",
-    backgroundColor: "#fff",
-  },
-  inputFocused: {
-    borderColor: "#27c14a",
-  },
-  inputError: {
-    borderColor: "#e53935",
-  },
+  // input: {
+  //   width: "100%",
+  //   borderRadius: 30,
+  //   height: 40,
+  //   paddingHorizontal: 20,
+  //   fontSize: 14,
+  //   borderWidth: 1,
+  //   borderColor: "#e0e0e0",
+  //   color: "#000",
+  //   backgroundColor: "#fff",
+  // },
+  // inputFocused: {
+  //   borderColor: "#27c14a",
+  // },
+  // inputError: {
+  //   borderColor: "#e53935",
+  // },
   error: {
     color: "#a30000",
     fontSize: 12,

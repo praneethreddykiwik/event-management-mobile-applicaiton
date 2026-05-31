@@ -7,5 +7,8 @@ export const getManagersApi = (queryParams) => {
     "process.env.EXPO_PUBLIC_BE_API_BASE_URL: ",
     process.env.EXPO_PUBLIC_BE_API_BASE_URL,
   );
-  return httpsClient.get("users/event-managers" + queryParams);
+  return httpsClient.get("/users" + queryParams);
 };
+
+export const getUsersApi = (queryParams) =>
+  httpsClient.get("/users" + queryParams);

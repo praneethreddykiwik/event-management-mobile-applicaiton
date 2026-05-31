@@ -17,6 +17,7 @@ const ROUTE_LABELS = {
   EventsDashboard: "Events",
   EventsDashboard2: "Events2",
   CreateEvent: "Create Event",
+  Tasks: "Tasks",
 };
 
 const CustomTabBar = ({ state }) => {

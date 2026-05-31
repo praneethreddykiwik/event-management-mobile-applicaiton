@@ -38,7 +38,7 @@ const typography = {
     "line-height": 20,
     "letter-spacing": 0,
   },
-  "caption": {
+  caption: {
     "font-weight": "500",
     "font-size": 12,
     "line-height": 16,
@@ -62,7 +62,8 @@ const colors = {
   "light-blue": "#F1FAFF",
   "active-color": "#FF4A4A",
   "inactive-color": "#666666",
-  "text-gray-color": "#86868d",
+  "text-gray-color": "#9E9E9E",
+  "gray-light": "#EDEDED",
 };
 
 const fontWeights = {
@@ -123,14 +124,11 @@ const shadows = {
 };
 
 const borders = {
-  "border-disabled": { borderWidth: 1, borderColor: colors["gray-disabled"] },
-  "border-warning-light": {
-    borderWidth: 1,
-    borderColor: colors["warning-light"],
-  },
-  "border-warning": { borderWidth: 1, borderColor: colors.warning },
-  "border-default": { borderWidth: 1, borderColor: colors.black },
-  "border-gray": { borderWidth: 1, borderColor: colors["gray-disabled"] },
+  "border-disabled": `1px solid ${colors["gray-disabled"]}`,
+  "border-warning-light": `1px solid ${colors["warning-light"]}`,
+  "border-warning": `1px solid ${colors.warning}`,
+  "border-default": `1px solid ${colors.black}`,
+  "border-gray": `1px solid ${colors["gray-light"]}`,
 };
 
 const inputs = {

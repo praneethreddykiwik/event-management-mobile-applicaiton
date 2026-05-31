@@ -1,31 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet } from "react-native";
+import Toast from "react-native-toast-message";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 
+import PageHeader from "../../../components/Headers/PageHeader/PageHeader";
+import { VenueSuggestion } from "../../../components/Venue/VenueSuggestion";
+import { eventsMetadata } from "../../../constants/events.constants";
 import { ScreenWrapper } from "../../../HOC/ScreenWrapper";
-import {
-  formsSelector,
-  updateAllEventInputs,
-} from "../../../redux/forms/forms.slice";
-import { userSelecter } from "../../../redux/users/users.slice";
+import ScrollView from "../../../layouts/scrollview/ScrollView.layout";
 import {
   createEventAction,
   updateEventAction,
 } from "../../../redux/events/events.action";
-import { fetchManagersAction } from "../../../redux/users/users.actions";
+import {
+  formsSelector,
+  updateAllEventInputs,
+} from "../../../redux/forms/forms.slice";
 import { generateNewEventsInputs } from "../../../redux/forms/metadata/event.metadata";
-import { eventsMetadata } from "../../../constants/events.constants";
-import { VenueSuggestion } from "../../../components/Venue/VenueSuggestion";
-import Toast from "react-native-toast-message";
-import CreateEventForm from "./CreateEventForm";
-import PageHeader from "../../../components/Headers/PageHeader/PageHeader";
-import ScrollView from "../../../layouts/scrollview/ScrollView.layout";
+import { fetchManagersAction } from "../../../redux/users/users.actions";
+import { usersSelector } from "../../../redux/users/users.slice";
 import logger from "../../../utils/logger.utils";
+import CreateEventForm from "./CreateEventForm";
 
 const CreateEditEvent = ({ navigation, route }) => {
   const dispatch = useDispatch();
-  const { eventManagers } = useSelector(userSelecter);
+  const { eventManagers, eventManagersLoaded } = useSelector(usersSelector);
   const { createEventInputs } = useSelector(formsSelector);
 
   const isEditMode = route?.params?.mode === "edit";
@@ -37,23 +38,25 @@ const CreateEditEvent = ({ navigation, route }) => {
   }, []);
 
   const refreshOnCreateMode = () => {
-    if (!eventManagers.length) {
+    if (eventManagersLoaded) {
+      const inputs = generateNewEventsInputs(eventManagers);
+      dispatch(updateAllEventInputs(inputs));
+    } else {
       const callback = (eventManagersRes) => {
         const inputs = generateNewEventsInputs(eventManagersRes);
 
         dispatch(updateAllEventInputs(inputs));
       };
       dispatch(fetchManagersAction({ callback }));
-    } else {
-      const inputs = generateNewEventsInputs(eventManagers);
-      dispatch(updateAllEventInputs(inputs));
     }
   };
 
   const onCreateEvent = (payload) => {
+    logger.info("isEditMode: ", isEditMode);
     if (isEditMode) {
       dispatch(updateEventAction(payload));
     } else {
+      Toast.show({ type: "success", text1: "Event created successfully" });
       dispatch(createEventAction(payload));
     }
   };

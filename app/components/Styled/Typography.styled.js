@@ -4,6 +4,9 @@ import { turncateStyles } from "./utils.styled";
 const textAlign = ({ left, right }) =>
   left ? "left" : right ? "right" : "center";
 
+const colorSwitch = ({ light, white }) =>
+  light ? "#bdbdbd" : white ? "#fff" : "#000";
+
 const marginTop = ({ small, medium }) => (small ? 25 : medium ? 50 : 5);
 const marginBottom = ({ small, medium }) => (small ? 25 : medium ? 50 : 5);
 
@@ -53,7 +56,7 @@ export const StyledMediumHeading = styled.Text`
 
 // Paragraphs
 export const StyledParagraph = styled.Text`
-  color: ${({ theme }) => theme.color};
+  color: ${colorSwitch};
   font-size: 16px;
   font-weight: 400;
   line-height: 22.4px;
@@ -87,7 +90,7 @@ export const StyledParagraphSmallGray = styled.Text`
 `;
 
 export const StyledParagraphSmall = styled.Text`
-  color: ${({ theme }) => theme.colors["text-gray-color"]};
+  color: ${({ theme }) => theme.colors["black"]};
   font-size: 12px;
   font-weight: 400;
   line-height: 18.2px;

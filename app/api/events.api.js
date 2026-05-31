@@ -5,7 +5,7 @@ export const fetchEventsApi = (query = "") => {
 };
 
 export const createEventApi = (payload) => {
-  return httpsClient.post("/events", payload);
+  return httpsClient.post("/events/create-event", payload);
 };
 
 export const updateEventApi = (payload) => {
@@ -13,9 +13,9 @@ export const updateEventApi = (payload) => {
 };
 
 export const assignEventApi = (payload) => {
-  return httpsClient.patch(`/events/${payload.eventUid}/assign`, payload);
+  return httpsClient.post(`/events/assign-event`, payload);
 };
 
-export const deleteEventApi = (eventUid, payload) => {
-  return httpsClient.delete(`/events/${eventUid}`, { data: payload });
+export const deleteEventApi = (payload) => {
+  return httpsClient.delete(`/events/delete-event`, { data: payload });
 };

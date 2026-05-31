@@ -1,18 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  fetchEventsApi,
-  createEventApi,
-  updateEventApi,
-  assignEventApi,
-  deleteEventApi,
-} from "../../api/events.api";
 import Toast from "react-native-toast-message";
+
+import {
+  assignEventApi,
+  createEventApi,
+  deleteEventApi,
+  fetchEventsApi,
+  updateEventApi,
+} from "../../api/events.api";
+import logger from "../../utils/logger.utils";
 
 export const fetchEventsAction = createAsyncThunk(
   "events/fetchEventsAction",
   async (payload, { rejectWithValue }) => {
     try {
       const fetchEventsRes = await fetchEventsApi(payload?.query || "");
+      Toast.show({ type: "success", text1: "Event fetched successfully" });
       return fetchEventsRes.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data || "Failed to fetch events");
@@ -77,6 +80,8 @@ export const assignEventAction = createAsyncThunk(
   async ({ reqPayload }, { rejectWithValue }) => {
     try {
       const res = await assignEventApi(reqPayload);
+      Toast.show({ type: "success", text1: "Event created successfully" });
+      res.data.reqPayload = reqPayload;
       return res.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data || "Failed to assign event");
@@ -88,10 +93,32 @@ export const deleteEventAction = createAsyncThunk(
   "events/deleteEventAction",
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await deleteEventApi(payload.eventUid, payload);
-      return { ...res.data, eventUid: payload.eventUid };
+      logger.info("payload delete event: ", payload);
+      const res = await deleteEventApi(payload);
+      logger.info("resposne delete event: ", res.data);
+      return payload;
     } catch (error) {
       return rejectWithValue(error?.response?.data || "Failed to delete event");
+    }
+  },
+);
+
+export const fetchEventDetailsAction = createAsyncThunk(
+  "events/fetchEventDetailsAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const query = `?eventUid=${payload.eventUid}`;
+      const res = await fetchEventsApi(query);
+      return res.data?.details?.events?.[0] || null;
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1:
+          error?.response?.data?.message || "Failed to fetch event details",
+      });
+      return rejectWithValue(
+        error?.response?.data || "Failed to fetch event details",
+      );
     }
   },
 );

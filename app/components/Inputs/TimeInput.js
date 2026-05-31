@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+
 import { validationList } from "../../constants/validations.constants";
+import logger from "../../utils/logger.utils";
+import { isoToInputDateTime } from "../../utils/utils";
+import DTPicker from "../DateTimePicker/DTPicker.component";
+import { StyledParagraphSmall } from "../Styled/Typography.styled";
 
 export const TimeInput = ({
   label,
@@ -12,12 +17,13 @@ export const TimeInput = ({
   validations,
   disabled,
 }) => {
-  const [focused, setFocused] = useState(false);
   const isRequired = validations?.includes(validationList.REQUIRED);
 
-  const handleChange = (text) => {
-    onChange({ target: { name, value: text } });
-  };
+  const { time: formatedTime } = isoToInputDateTime(value);
+
+  // const handleChange = (text) => {
+  //   onChange({ target: { name, value: text } });
+  // };
 
   return (
     <View style={styles.container}>
@@ -27,22 +33,9 @@ export const TimeInput = ({
           {isRequired ? " *" : ""}
         </Text>
       ) : null}
-      <TextInput
-        style={[
-          styles.input,
-          focused && styles.inputFocused,
-          error && styles.inputError,
-        ]}
-        value={value}
-        placeholder={placeholder || "HH:MM"}
-        onChangeText={handleChange}
-        placeholderTextColor="#bdbdbd"
-        keyboardType="numeric"
-        maxLength={5}
-        editable={!disabled}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-      />
+      <DTPicker mode="time" value={value} onChange={onChange} name={name}>
+        <StyledParagraphSmall>{formatedTime}</StyledParagraphSmall>
+      </DTPicker>
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );

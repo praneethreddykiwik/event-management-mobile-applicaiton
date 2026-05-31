@@ -1,33 +1,41 @@
 import styled from "styled-components/native";
+
+import { useDrawer } from "../../../navigation/DrawerContext";
+import { Icon } from "../../Icons/Icons";
 import { StyledHeading } from "../../Styled/Typography.styled";
 
 const PageHeader = ({ children, title }) => {
+  const { open } = useDrawer();
+
   return (
-    <>
-      <StyledView>
+    <Row>
+      <MenuBtn onPress={open} hitSlop={12} activeOpacity={0.7}>
+        <Icon variant="menu" size={26} color="#000" />
+      </MenuBtn>
+
+      <TitleSlot>
         {title ? <StyledHeading>{children}</StyledHeading> : children}
-      </StyledView>
-      {/* <Divider /> */}
-    </>
+      </TitleSlot>
+    </Row>
   );
 };
 
-const StyledView = styled.View`
-  padding: 0 20px;
+const Row = styled.View`
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
   height: 76px;
-  /* border: 1px solid red; */
-  /* align-items: center; */
-  justify-content: center;
-  /* border: 1px solid red; */
 `;
 
-const Divider = styled.View`
-  height: 1px;
-  background-color: #000; // check here
-  /* position: absolute; */
-  /* bottom: 100px; */
-  /* left: 0;
-  right: 0; */
+const MenuBtn = styled.TouchableOpacity`
+  padding: 6px;
+  border-radius: 10px;
+`;
+
+const TitleSlot = styled.View`
+  flex: 1;
+  justify-content: center;
 `;
 
 export default PageHeader;

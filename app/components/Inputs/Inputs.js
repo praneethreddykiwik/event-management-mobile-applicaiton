@@ -4,6 +4,7 @@ import { NumberInput } from "./NumberInput";
 import { DateInput } from "./DateInput";
 import { TextArea } from "./TextArea";
 import { TimeInput } from "./TimeInput";
+import { RadioGroup } from "./RadioGroup";
 
 export const Inputs = (props) => {
   const { type } = props;
@@ -29,6 +30,9 @@ export const Inputs = (props) => {
 
     case "textarea":
       return <TextArea {...props} />;
+
+    case "radio-group":
+      return <RadioGroup {...props} />;
 
     default:
       return null;

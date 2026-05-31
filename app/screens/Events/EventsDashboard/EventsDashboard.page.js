@@ -1,49 +1,51 @@
+import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { ScreenWrapper } from "../../../HOC/ScreenWrapper";
 
-import { eventsSelector } from "../../../redux/events/events.slice";
-import { userSelecter } from "../../../redux/users/users.slice";
-import { fetchEventsAction } from "../../../redux/events/events.action";
-import { fetchManagersAction } from "../../../redux/users/users.actions";
-import { ROLES } from "../../../constants/roles";
-import { INITIAL_FILTERS } from "../../../constants/events.constants";
-import { mapEventForUI } from "../../../helpers/Dashboard.helper";
-
-import EventSummaryCards from "./components/EventSummaryCards";
-import CreateEventButtons from "./components/CreateEventButtons";
-import EventsFilterCards from "./components/EventsFilterCards";
-import EventItem from "./components/EventItem";
-import { MONITOR_EV } from "../../../Enums";
 import PageHeader from "../../../components/Headers/PageHeader/PageHeader";
+import { INITIAL_FILTERS } from "../../../constants/events.constants";
+import { ROLES } from "../../../constants/roles";
+import { MONITOR_EV } from "../../../Enums";
+import { mapEventForUI } from "../../../helpers/Dashboard.helper";
+import { ScreenWrapper } from "../../../HOC/ScreenWrapper";
 import ScrollView from "../../../layouts/scrollview/ScrollView.layout";
+import { fetchEventsAction } from "../../../redux/events/events.action";
+import { eventsSelector } from "../../../redux/events/events.slice";
+import { fetchManagersAction } from "../../../redux/users/users.actions";
+import { usersSelector } from "../../../redux/users/users.slice";
 import logger from "../../../utils/logger.utils";
+import CreateEventButtons from "./components/CreateEventButtons";
+import EventItem from "./components/EventItem";
+import EventsFilterCards from "./components/EventsFilterCards";
+import EventSummaryCards from "./components/EventSummaryCards";
 
 // Compare here/. need full comparision and re-write.
 const EventsDashboard = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const { events, eventsLoading } = useSelector(eventsSelector);
-  const { eventManagers } = useSelector(userSelecter);
+  const { events, eventsLoading, eventsLoaded } = useSelector(eventsSelector);
+  const { eventManagers, eventManagersLoaded } = useSelector(usersSelector);
 
   useEffect(() => {
-    dispatch(fetchManagersAction());
-    const query = `?status=${INITIAL_FILTERS.filter((fl) => fl.selected)
-      .map((m) => m.value)
-      .join(",")}`;
-    logger.info("requry of fetch managers", query);
-    dispatch(fetchEventsAction({ query }));
+    if (!eventManagersLoaded) {
+      dispatch(fetchManagersAction());
+    }
+    if (!eventsLoaded && !eventsLoading) {
+      const query = `?status=${INITIAL_FILTERS.filter((fl) => fl.selected)
+        .map((m) => m.value)
+        .join(",")}`;
+      logger.info("requry of fetch managers", query);
+      dispatch(fetchEventsAction({ query }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onCreateEvent = () => {
     navigation.navigate("CreateEvent");
   };
-
-  logger.info("events render here: ", events);
 
   return (
     <ScreenWrapper>
@@ -56,9 +58,9 @@ const EventsDashboard = () => {
           onManageManagers={() => {}}
         />
 
-        <SectionTitle>Filters</SectionTitle>
+        {/* <SectionTitle>Filters</SectionTitle>
         <SectionSubtitle>Click to select below filters</SectionSubtitle>
-        <EventsFilterCards />
+        <EventsFilterCards /> */}
 
         <TaskMainCard>
           <TaskHeader>
@@ -111,6 +113,7 @@ const TaskMainCard = styled.View.attrs(({ theme }) => ({
   border-radius: 14px;
   background-color: ${({ theme }) => theme.colors.white};
   margin-bottom: 100px;
+  padding: 0 10px;
 `;
 
 const TaskHeader = styled.View`

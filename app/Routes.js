@@ -1,24 +1,49 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// SCREENS
-import EventsDashboard from "./screens/Events/EventsDashboard/EventsDashboard.page";
-import CreateEditEvent from "./screens/Events/CreateEvent/CreateEditEvent.page";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import CustomTabBar from "./components/CustomTabBar/CustomTabBar.component";
 
-const Tab = createBottomTabNavigator();
+import { ROUTES } from "./navigation/routes";
+import CreateEditEvent from "./screens/Events/CreateEvent/CreateEditEvent.page";
+import EventDetails from "./screens/Events/EventDetails/EventDetails.page";
+import EventsDashboard from "./screens/Events/EventsDashboard/EventsDashboard.page";
+import Placeholder from "./screens/Placeholder/Placeholder.page";
+import CreateTask from "./screens/Tasks/CreateTask.page";
+import Tasks from "./screens/Tasks/Tasks.page";
+
+const Stack = createNativeStackNavigator();
 
 const AppRoutes = () => {
   return (
-    <Tab.Navigator
-      initialRouteName="EventsDashboard"
+    <Stack.Navigator
+      initialRouteName={ROUTES.eventsDashboard}
       screenOptions={{
         headerShown: false,
+        animation: "slide_from_right",
+        animationDuration: 220,
       }}
-      tabBar={(props) => <CustomTabBar {...props} screenOptions />}
     >
-      <Tab.Screen name="EventsDashboard" component={EventsDashboard} />
-      <Tab.Screen name="CreateEvent" component={CreateEditEvent} />
-    </Tab.Navigator>
+      <Stack.Screen name={ROUTES.home} component={Placeholder} />
+      <Stack.Screen name={ROUTES.login} component={Placeholder} />
+      <Stack.Screen name={ROUTES.registration} component={Placeholder} />
+      <Stack.Screen name={ROUTES.twoFactorAuth} component={Placeholder} />
+      <Stack.Screen name={ROUTES.accountSettings} component={Placeholder} />
+      <Stack.Screen name={ROUTES.newsFeed} component={Placeholder} />
+      <Stack.Screen name={ROUTES.getInTouch} component={Placeholder} />
+
+      <Stack.Screen name={ROUTES.eventsDashboard} component={EventsDashboard} />
+      <Stack.Screen name={ROUTES.eventsDetails} component={EventDetails} />
+      <Stack.Screen name={ROUTES.createEvent} component={CreateEditEvent} />
+      <Stack.Screen name={ROUTES.editEvent} component={CreateEditEvent} />
+
+      <Stack.Screen name={ROUTES.tasks} component={Tasks} />
+      <Stack.Screen name={ROUTES.createTask} component={CreateTask} />
+
+      <Stack.Screen name={ROUTES.vendor} component={Placeholder} />
+      <Stack.Screen name={ROUTES.supervisor} component={Placeholder} />
+      <Stack.Screen name={ROUTES.qa} component={Placeholder} />
+
+      <Stack.Screen name={ROUTES.userManagement} component={Placeholder} />
+      <Stack.Screen name={ROUTES.marketPlace} component={Placeholder} />
+      <Stack.Screen name={ROUTES.venues} component={Placeholder} />
+    </Stack.Navigator>
   );
 };
 

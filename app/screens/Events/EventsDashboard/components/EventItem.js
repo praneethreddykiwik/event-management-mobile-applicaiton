@@ -1,13 +1,15 @@
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
+
 import { authSelector } from "../../../../redux/auth/auth.slice";
-import { eventsSelector } from "../../../../redux/events/events.slice";
 import {
   assignEventAction,
   deleteEventAction,
   fetchEventsAction,
 } from "../../../../redux/events/events.action";
+import { eventsSelector } from "../../../../redux/events/events.slice";
+import logger from "../../../../utils/logger.utils";
 import { formatDateTime } from "../../../../utils/utils";
 
 const EventItem = ({ event, onViewDetails }) => {
@@ -15,18 +17,43 @@ const EventItem = ({ event, onViewDetails }) => {
   const { authUser } = useSelector(authSelector);
   const { selectedEventFilters } = useSelector(eventsSelector);
 
+  // logger.info("event here map: ", event);
+
   const isAssignedToMe = event.assignedToUid === authUser?.uid;
   // Compare here/.
   const onAssignToMe = () => {
+    const reqPayload = {
+      eventUid: event.uid,
+      assignedToUid: authUser?.uid,
+      userName: authUser?.username,
+      tenantUid: authUser?.tenantUid, // this value should go from BE session not FE. // check here
+      updatedByUid: authUser?.uid, // this value should go from BE session not FE. // check here
+    };
+
+    logger.info("reqpayload item: ", reqPayload);
+
     dispatch(
       assignEventAction({
-        reqPayload: {
-          eventUid: event.uid,
-          assignedToUid: authUser?.uid,
-          userName: authUser?.username,
-        },
+        reqPayload,
       }),
     );
+  };
+
+  const handleDeleteAction = async () => {
+    const reqPayload = {
+      eventUid: event.uid,
+      tenantUid: event.tenantUid,
+      deletedByUid: authUser?.uid,
+      deleteReason: "",
+    };
+
+    await dispatch(deleteEventAction(reqPayload));
+
+    const query = selectedEventFilters
+      .filter((f) => f.selected)
+      .map((f) => f.value)
+      .join(",");
+    dispatch(fetchEventsAction({ query: `?status=${query}` }));
   };
 
   const onDelete = () => {
@@ -35,14 +62,7 @@ const EventItem = ({ event, onViewDetails }) => {
       {
         text: "Yes",
         style: "destructive",
-        onPress: async () => {
-          await dispatch(deleteEventAction({ eventUid: event.uid }));
-          const query = selectedEventFilters
-            .filter((f) => f.selected)
-            .map((f) => f.value)
-            .join(",");
-          dispatch(fetchEventsAction({ query: `?status=${query}` }));
-        },
+        onPress: handleDeleteAction,
       },
     ]);
   };
@@ -54,13 +74,13 @@ const EventItem = ({ event, onViewDetails }) => {
           <EventName>{event.eventName}</EventName>
           <Meta>Scheduled At: {formatDateTime(event.scheduledAt)}</Meta>
           <Meta>
-            Venue:{" "}
+            <Bold>Venue:</Bold>{" "}
             {event.venue
               ? event.venue.charAt(0).toUpperCase() + event.venue.slice(1)
               : "—"}
           </Meta>
           <Meta>
-            Event Manager: <Bold>{event.userName || "Unassigned"}</Bold>
+            <Bold>Event Manager:</Bold> {event.userName || "Unassigned"}
           </Meta>
         </Info>
 
@@ -75,6 +95,7 @@ const EventItem = ({ event, onViewDetails }) => {
         {isAssignedToMe ? (
           <AssignedLabel>Assigned To Me</AssignedLabel>
         ) : (
+          // refactor this later // check here important
           <AssignBtn onPress={onAssignToMe}>
             <AssignBtnText>Assign to Me</AssignBtnText>
           </AssignBtn>
@@ -93,12 +114,14 @@ const EventItem = ({ event, onViewDetails }) => {
   );
 };
 
-const Card = styled.View`
+const Card = styled.View.attrs(({ theme }) => ({
+  style: theme?.shadows?.["level-3"] || {},
+}))`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 14px;
   padding: 16px;
   margin-bottom: 12px;
-  ${({ theme }) => theme.shadows["level-3"]}
+  border: ${({ theme }) => theme.borders["border-gray"]};
 `;
 
 const Header = styled.View`
@@ -166,7 +189,7 @@ const AssignedLabel = styled.Text`
 
 const AssignBtn = styled.TouchableOpacity`
   padding: 7px 14px;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 8px;
 `;
 

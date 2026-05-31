@@ -7,8 +7,8 @@ const ScrollView = ({ children }) => {
 const StyledScrollView = styled.ScrollView`
   flex: 1;
   padding-top: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 export default ScrollView;

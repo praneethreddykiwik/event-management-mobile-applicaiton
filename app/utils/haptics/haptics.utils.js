@@ -13,5 +13,5 @@ export const triggerErrorHaptics = () => {
 };
 
 export const triggerHeavyHaptics = () => {
-  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  Haptics.impactAsync(Haptics.NotificationFeedbackType.Medium);
 };

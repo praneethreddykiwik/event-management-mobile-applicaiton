@@ -21,13 +21,14 @@ const Row = styled.View`
   margin-bottom: 16px;
 `;
 
-const Card = styled.View`
+const Card = styled.View.attrs(({ theme }) => ({
+  style: theme?.shadows?.["level-3"] || {},
+}))`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 14px;
   padding: 16px;
   align-items: center;
-  ${({ theme }) => theme.shadows["level-3"]}
 `;
 
 const Value = styled.Text`
