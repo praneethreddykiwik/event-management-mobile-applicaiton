@@ -13,7 +13,7 @@ const FilterCard = ({ objKey, value, color, onPress, selected }) => (
     <Label>{camelToWords(snakeToCamel(objKey))}</Label>
   </StyledCard>
 );
-// Dummy commit
+
 const StyledCard = styled.TouchableOpacity.attrs(({ theme }) => ({
   style: theme?.shadows?.["level-3"] || {},
 }))`
