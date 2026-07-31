@@ -6,6 +6,7 @@ export const ROUTES = {
   accountSettings: "AccountSettings",
   newsFeed: "NewsFeed",
   getInTouch: "GetInTouch",
+  ourServices:"OurServices",
 
   eventsDashboard: "EventsDashboard",
   eventsDetails: "EventDetails",

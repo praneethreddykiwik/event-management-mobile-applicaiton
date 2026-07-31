@@ -67,6 +67,12 @@ export const MENU_SECTIONS = [
         route: ROUTES.userManagement,
         perm: "admin:panel",
       },
+      {
+        key: "ourServices",
+        label: "Our Services",
+        icon: "miscellaneous-services",
+        route: ROUTES.ourServices,
+      },
     ],
   },
 ];
