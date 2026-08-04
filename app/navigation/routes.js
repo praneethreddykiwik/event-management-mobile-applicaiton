@@ -23,4 +23,5 @@ export const ROUTES = {
 
   marketPlace: "MarketPlace",
   venues: "Venues",
+  whyHelm: "Why Helm"
 };
