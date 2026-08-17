@@ -7,6 +7,7 @@ import EventsDashboard from "./screens/Events/EventsDashboard/EventsDashboard.pa
 import Placeholder from "./screens/Placeholder/Placeholder.page";
 import CreateTask from "./screens/Tasks/CreateTask.page";
 import Tasks from "./screens/Tasks/Tasks.page";
+import OurServices from "./screens/OurServices/OurServicesPage";
 import WhyChoose from "./screens/WhyChooseHelm/WhyChooseHelmPage";
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ const AppRoutes = () => {
       <Stack.Screen name={ROUTES.accountSettings} component={Placeholder} />
       <Stack.Screen name={ROUTES.newsFeed} component={Placeholder} />
       <Stack.Screen name={ROUTES.getInTouch} component={Placeholder} />
+      <Stack.Screen name={ROUTES.ourServices} component={OurServices} />
 
       <Stack.Screen name={ROUTES.eventsDashboard} component={EventsDashboard} />
       <Stack.Screen name={ROUTES.eventsDetails} component={EventDetails} />
