@@ -1,7 +1,7 @@
 import logger from "../utils/logger.utils";
 import { httpsClient } from "./client/httpsClient";
 
-export const getManagersApi = (queryParams) => {
+export const getManagersApi = (queryParams = "") => {
   logger.debug("queryParams: ", queryParams);
   logger.debug(
     "process.env.EXPO_PUBLIC_BE_API_BASE_URL: ",
@@ -10,5 +10,5 @@ export const getManagersApi = (queryParams) => {
   return httpsClient.get("/users" + queryParams);
 };
 
-export const getUsersApi = (queryParams) =>
+export const getUsersApi = (queryParams = "") =>
   httpsClient.get("/users" + queryParams);

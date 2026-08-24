@@ -24,8 +24,15 @@
       "edgeToEdgeEnabled": true,
       "package": "com.anonymous.eventmanagementapp"
     },
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "web": {
-      "favicon": "./app/assets/favicon.png"
+      "favicon": "./app/assets/favicon.png",
+      "bundler": "metro",
+      "output": "single"
     }
   }
 }
